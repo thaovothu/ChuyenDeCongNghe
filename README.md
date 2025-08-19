@@ -12,21 +12,25 @@ A simple Django project to manage movies and actors with relational queries, for
 
 
 2. Create virtual environment and install dependencies
+    ```bash
     python -m venv .venv
     source .venv/bin/activate  # On Windows: .venv\Scripts\activate
     pip install -r requirements.txt
 
 
 3. Run migrations
+    ```bash
     python manage.py makemigrations myapp
     python manage.py migrate
 
 
 4. Create sample data
+    ```bash
     python manage.py create_sample_movies
 
 
 5. Run the server
+    ```bash
     python manage.py runserver
 
 
