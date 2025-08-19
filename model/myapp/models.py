@@ -1,35 +1,17 @@
 from django.db import models
-from datetime import date
 
-
-
-
-class Blog(models.Model):
+class Actor(models.Model):
     name = models.CharField(max_length=100)
-    tagline = models.TextField()
+    birth_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.name
 
-
-class Author(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-
-    def __str__(self):
-        return self.name
-
-
-class Entry(models.Model):
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    headline = models.CharField(max_length=255)
-    body_text = models.TextField()
-    pub_date = models.DateField()
-    mod_date = models.DateField(default=date.today)
-    authors = models.ManyToManyField(Author)
-    number_of_comments = models.IntegerField(default=0)
-    number_of_pingbacks = models.IntegerField(default=0)
-    rating = models.IntegerField(default=5)
+class Movie(models.Model):
+    title = models.CharField(max_length=200)
+    release_date = models.DateField(null=True, blank=True)
+    duration_minutes = models.IntegerField(default=90)
+    actors = models.ManyToManyField(Actor, related_name="movies")
 
     def __str__(self):
-        return self.headline
+        return self.title
