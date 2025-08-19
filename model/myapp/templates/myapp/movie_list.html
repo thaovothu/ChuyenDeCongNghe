@@ -1,0 +1,27 @@
+<!-- myapp/templates/myapp/movie_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie List</title>
+</head>
+<body>
+    <h1>Movie List</h1>
+    <a href="{% url 'add_movie' %}">Add New Movie</a>
+    <ul>
+        {% for movie in movies %}
+            <li>
+                {{ movie.title }} - {{ movie.release_date }} - {{ movie.duration_minutes }} mins
+                <br>
+                Actors: 
+                {% for actor in movie.actors.all %}
+                    {{ actor.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No actors
+                {% endfor %}
+            </li>
+        {% empty %}
+            <li>No movies found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
