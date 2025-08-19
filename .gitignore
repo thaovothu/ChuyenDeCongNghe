@@ -1,0 +1,39 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+
+# Unit test / coverage
+.coverage
+.tox/
+.pytest_cache/
+htmlcov/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+
+Library/
+*.csproj
+node_modules/
+package-lock.json
+run/
