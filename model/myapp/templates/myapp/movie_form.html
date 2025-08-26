@@ -1,0 +1,16 @@
+<!-- myapp/templates/myapp/movie_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Movie</title>
+</head>
+<body>
+    <h1>Add Movie</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'movie_list' %}">Back to Movie List</a>
+</body>
+</html>
