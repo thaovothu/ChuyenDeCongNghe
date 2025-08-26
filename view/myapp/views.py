@@ -30,3 +30,44 @@ def created_view(request):
 async def async_show_time(request):
     await asyncio.sleep(1)
     return HttpResponse(f"(async) Bây giờ là: {timezone.now()}")
+
+
+
+# --- Class-based views ---
+class AboutView(View):
+    def get(self, request):
+        return HttpResponse("Đây là trang About - Ứng dụng Quản lý Phim & Diễn Viên")
+
+class MovieListView(ListView):
+    template_name = "myapp/movies.html"
+    context_object_name = "movies"
+
+    def get_queryset(self):
+        return [
+            {"title": "Inception", "year": 2010},
+            {"title": "The Matrix", "year": 1999},
+            {"title": "Interstellar", "year": 2014},
+        ]
+
+class AsyncView(View):
+    async def get(self, request):
+        await asyncio.sleep(1)
+        return HttpResponse("Trả lời từ Async Class-based View")
+
+# --- Template views ---
+def template_demo(request):
+    data = {"movies": ["Avatar", "Titanic", "Joker"]}
+    return render(request, "myapp/template_demo.html", data)
+
+def external_template(request):
+    data = {"actor": "Leonardo DiCaprio", "movies": ["Inception", "The Revenant"]}
+    return render(request, "outside_template.html", data)
+
+
+def movie_list(request):
+    movies = [
+        {"title": "Inception", "year": 2010},
+        {"title": "Interstellar", "year": 2014},
+        {"title": "Oppenheimer", "year": 2023},
+    ]
+    return render(request, "myapp/movie_list.html", {"movies": movies})

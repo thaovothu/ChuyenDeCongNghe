@@ -11,5 +11,13 @@ urlpatterns = [
     path("created/", views.created_view, name="created"),
     path("asyncnow/", views.async_show_time, name="asyncnow"),
     
-    
+    # Class-based views
+    path("about/", views.AboutView.as_view(), name="about"),
+    path("movies-list/", views.MovieListView.as_view(), name="movies_list"),
+    path("asyncview/", views.AsyncView.as_view(), name="async_view"),
+
+    # Template views
+    path("template-demo/", views.template_demo, name="template_demo"),
+    path("external-template/", views.external_template, name="external_template"),
+
 ]
