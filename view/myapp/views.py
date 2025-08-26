@@ -39,7 +39,7 @@ class AboutView(View):
         return HttpResponse("Đây là trang About - Ứng dụng Quản lý Phim & Diễn Viên")
 
 class MovieListView(ListView):
-    template_name = "myapp/movies.html"
+    template_name = "myapp/template_demo.html"
     context_object_name = "movies"
 
     def get_queryset(self):

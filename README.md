@@ -133,16 +133,16 @@ A simple Django project to manage movies and actors with relational queries, for
 
 ## Usage
 
-1. Visit movie list: http://127.0.0.1:8000/movies-list/
-2. Visit about page: http://127.0.0.1:8000/about/
+1. Visit movie list: http://127.0.0.1:8000/myapp/movies-list/
+2. Visit about page: http://127.0.0.1:8000/myapp/about/
 3. Test relational queries in Django shell:
    ```python
    from myapp.models import Actor, Movie
     leo = Actor.objects.get(name="Leonardo DiCaprio")
     leo.movies.all()
 
-4. Test async view: http://127.0.0.1:8000/asyncnow/
+4. Test async view: http://127.0.0.1:8000/myapp/asyncnow/
 5. Test templates:
-    http://127.0.0.1:8000/template-demo/
-    http://127.0.0.1:8000/external-template/
+    http://127.0.0.1:8000/myapp/template-demo/
+    http://127.0.0.1:8000/myapp/external-template/
 
