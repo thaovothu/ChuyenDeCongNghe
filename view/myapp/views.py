@@ -5,7 +5,7 @@ from django.views import View
 from django.views.generic import ListView
 import asyncio
 
-# --- Function-based views ---
+
 def special_movie_1995(request):
     return HttpResponse("Phim nổi bật năm 1995: Toy Story ")
 
@@ -60,7 +60,7 @@ def template_demo(request):
     return render(request, "myapp/template_demo.html", data)
 
 def external_template(request):
-    data = {"actor": "Leonardo DiCaprio", "movies": ["Inception", "The Revenant"]}
+    data = {"actor": "Thu Thao", "movies": ["Inception", "The Revenant"]}
     return render(request, "outside_template.html", data)
 
 
