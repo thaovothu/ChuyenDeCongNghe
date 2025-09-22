@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Thông tin diễn viên</title></head>
+<body>
+    <h2>Diễn viên: {{ actor }}</h2>
+    <p>Các phim đã tham gia:</p>
+    <ul>
+        {% for movie in movies %}
+            <li>{{ movie }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
