@@ -49,9 +49,13 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
         print("ServiceTypeViewSet list called")
         return super().list(request, *args, **kwargs)
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 class OrderViewSet(BaseViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status', 'customer', 'preferred_start_time']  # Thêm các trường muốn filter
     search_map = {
         "status": "iexact",
         "customer__name": "icontains",

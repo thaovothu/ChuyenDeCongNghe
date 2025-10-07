@@ -266,6 +266,7 @@ INSTALLED_APPS = [
     'firebase',
     'health_check',
     'django_extensions',
+    
 ]
 
 
@@ -362,6 +363,9 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": (
         "rest_framework.renderers.JSONRenderer",
     ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
     "DEFAULT_PAGINATION_CLASS": "base.pagination.CustomPagination",
     "PAGE_SIZE": 12
 }
