@@ -65,7 +65,7 @@
         <!-- Phone -->
         <div class="flex-column">
           <label>{{ $t('phone') }}</label>
-          <div class="inputForm">
+          <div class="inputForm" :class="{ 'error-border': phoneError }">
             <input
               v-model="form.phone"
               type="text"
@@ -73,6 +73,7 @@
               :placeholder="$t('phone')"
             />
           </div>
+          <span v-if="phoneError" class="error-text">{{ phoneError }}</span>
         </div>
 
         <!-- Address -->
@@ -91,7 +92,7 @@
         <!-- Area -->
         <div class="flex-column col-span-2">
           <label>{{ $t('area') }}</label>
-          <div class="inputForm" style="position: relative;">
+          <div class="inputForm" style="position: relative;" :class="{ 'error-border': areaError }">
             <input
               v-model="form.area"
               type="text"
@@ -115,6 +116,7 @@
               </div>
             </div>
           </div>
+          <span v-if="areaError" class="error-text">{{ areaError }}</span>
         </div>
 
         <!-- Submit Button -->
@@ -169,6 +171,8 @@ const form = ref({
 const isLoading = ref(false)
 const isSubmitted = ref(false)
 const emailError = ref('')
+const phoneError = ref('')
+const areaError = ref('')
 const passwordError = ref('')
 
 // Area search functionality
@@ -290,6 +294,12 @@ const validateForm = () => {
 
 const submitForm = async () => {
   if (!validateForm()) return
+
+  // Reset all field errors before submit
+  emailError.value = ''
+  phoneError.value = ''
+  areaError.value = ''
+  passwordError.value = ''
   
   isLoading.value = true
   try {
@@ -309,13 +319,20 @@ const submitForm = async () => {
     // Handle specific error cases
     if (error?.response?.status === 400) {
       const errorData = error.response.data
+      // Gán lỗi từng trường nếu có
       if (errorData?.email) {
-        errorMessage = 'Email này đã được sử dụng. Vui lòng chọn email khác!'
-      } else if (errorData?.phone) {
-        errorMessage = 'Số điện thoại này đã được sử dụng. Vui lòng chọn số khác!'
-      } else if (errorData?.area) {
-        errorMessage = 'Khu vực không hợp lệ. Vui lòng chọn khu vực từ danh sách!'
-      } else if (errorData?.non_field_errors) {
+        emailError.value = errorData.email[0]
+      }
+      if (errorData?.phone) {
+        phoneError.value = errorData.phone[0]
+      }
+      if (errorData?.area) {
+        areaError.value = errorData.area[0]
+      }
+      if (errorData?.password) {
+        passwordError.value = errorData.password[0]
+      }
+      if (errorData?.non_field_errors) {
         errorMessage = errorData.non_field_errors[0] || errorMessage
       } else if (typeof errorData === 'string') {
         errorMessage = errorData
@@ -328,12 +345,15 @@ const submitForm = async () => {
       errorMessage = error.message
     }
     
-    ElNotification({
-      title: 'Đăng ký thất bại',
-      message: errorMessage,
-      type: 'error',
-      duration: 8000
-    })
+    // Nếu có lỗi field thì không cần hiện notification tổng quát
+    if (!emailError.value && !phoneError.value && !areaError.value && !passwordError.value) {
+      ElNotification({
+        title: 'Đăng ký thất bại',
+        message: errorMessage,
+        type: 'error',
+        duration: 8000
+      })
+    }
   } finally {
     isLoading.value = false
   }

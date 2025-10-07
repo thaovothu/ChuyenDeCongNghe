@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from base.views import BaseViewSet
 from rest_framework import viewsets, permissions
 from ..models import Order, Assignment, DecisionLog
@@ -23,10 +24,30 @@ class CustomerViewSet(viewsets.ModelViewSet):
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticated()]
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
+@method_decorator(cache_page(60*5), name='dispatch')  # Cache 5 phút
 class ServiceTypeViewSet(viewsets.ModelViewSet):
     queryset = ServiceType.objects.all().order_by('id')
     serializer_class = ServiceTypeSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        cache.clear()  # Xóa toàn bộ cache sau khi tạo mới
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        cache.clear()  # Xóa toàn bộ cache sau khi cập nhật
+
+    def perform_destroy(self, instance):
+        instance.delete()
+        cache.clear()  # Xóa toàn bộ cache sau khi xóa
+        
+    def list(self, request, *args, **kwargs):
+        print("ServiceTypeViewSet list called")
+        return super().list(request, *args, **kwargs)
 
 class OrderViewSet(BaseViewSet):
     queryset = Order.objects.all()
