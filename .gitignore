@@ -31,6 +31,10 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
+# Firebase/Google credentials
+dss/backend/firebase/credentials/serviceAccountKey.json
+dss/backend/firebase/credentials/*.json
+
 
 Library/
 *.csproj
